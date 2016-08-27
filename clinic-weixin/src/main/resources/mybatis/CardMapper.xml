@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.mapper.CardMapper">
+  
+  <select id="getCardByKey" parameterType="int" resultType="com.ijianbao.model.Card">
+  	select cid, no, password, status, uid, invalid_time as invalidTime from tb_card where cid=#{cid} and status=1;
+  </select>
+  
+  <select id="getCard" parameterType="com.ijianbao.model.Card" resultType="com.ijianbao.model.Card">
+  	select   type, cid, no, password, status, uid, invalid_time as invalidTime from tb_card where no=#{no} and status=1;
+  </select>
+  
+  <update id="updateCard" parameterType="com.ijianbao.model.Card">
+  	update tb_card set status=#{status}, uid=#{uid} where cid=#{cid}
+  </update>
+  
+  <select id="getCardType" parameterType="com.ijianbao.model.Card">
+      select type from tb_card where cid = #{cid}
+  </select>
+  
+</mapper>

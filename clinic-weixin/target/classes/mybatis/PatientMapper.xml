@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.mapper.PatientMapper">
+  
+  <insert id="savePatient" parameterType="com.ijianbao.model.Patient" >
+ 	<selectKey keyProperty="pid" resultType="int" order="AFTER" >
+    	select LAST_INSERT_ID() as pid
+    </selectKey>
+    insert into tb_patient(cid, name, sex, age, mobile, address, cards, relation, contact, hid, office, is_register, register_type, date, type, status, create_time, update_time, product_type) 
+ 		values 
+ 		(#{cid}, #{name}, #{sex}, #{age}, #{mobile}, #{address}, #{cards}, #{relation}, #{contact}, #{hid}, #{office}, #{isRegister}, #{registerType}, #{date}, #{type},  #{status}, #{createTime}, #{updateTime}, #{productType})
+
+ </insert>
+ 
+  <select id="getPatient" parameterType="int" resultType="com.ijianbao.model.Patient">
+  	<![CDATA[ select p.pid, p.name, p.date, p.hid, p.status from tb_patient as p
+  		left join tb_card as c on c.cid=p.cid 
+  		where c.uid=#{uid} and p.status<>0
+  	order by p.pid desc
+  	 ]]>  
+  </select>
+  
+  <update id="updatePatient" parameterType="com.ijianbao.model.Patient">
+  	update tb_patient set status=#{status} where pid=#{pid}
+  </update>
+  
+</mapper>

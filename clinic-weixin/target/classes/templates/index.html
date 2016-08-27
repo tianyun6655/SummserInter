@@ -1,0 +1,88 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家-门诊服务</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" id="WebViewport"
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+<link rel="stylesheet" th:href="@{/css/weui.min.css}"
+	href="../../clinic/css/weui.min.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../clinic/weixin.css" />
+<script src="../../clinic/js/js_adaption.js"></script>
+<script src="../../clinic/js/jquery-1.7.2.js"></script>
+
+<script th:inline="javascript">
+//<![CDATA[
+function submit(type){
+	var type_get =document.getElementById("type");
+	type_get.value = type;
+		/* if(type_get!=type){
+		alert("选择的类型和卡片类型不符合!");
+		return;
+	}
+	var form =document.getElementById("form"); */
+    document.getElementById("form").submit();
+}
+//]]> 
+</script>
+</head>
+<body>
+	<div
+		style="height: 98px; background: #fff; color: #949496; font-size: 34px; line-height: 98px; text-align: center; position: relative;">
+		<a href="#"
+			style="position: absolute; left: 30px; top: 26px; background: url(../../clinic/image/left_arrow.png); width: 25px; height: 46px; display: block;"></a><span>门诊服务</span>
+	</div>
+	<div style="margin: 0 50px; line-height: 0;">
+		<img src="../../clinic/image/mzfw.png" style="width: 100%;" />
+	</div>
+	<div class="weui_cells " style="margin-top: 0; margin-bottom: 50px;">
+
+		<form id="form" th:action="@{/card/form}" mehod="get">
+			<input type ="hidden" name = "type" id ="type"/>
+			<input type="hidden"  name="uid"  id = "uid" th:value ="${uid}"/>
+			
+			<a	 class="weui_cell" style="height: 160px;" th:href="@{/card/form(type=1,uid=${uid})}" href="#">
+				<div class="weui_cell_hd">
+					<img src="" style="width: 40px; display: block" />
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p style="font-size: 32px; color: #5e656f; margin-bottom: 38px;">成人诊无忧</p>
+					<p style="font-size: 26px; color: #7c7c7c;">专业护士/一站式服务/无需排队</p>
+				</div>
+				<div class="weui_cell_ft"
+					style="background: url(../../clinic/image/right_arrow.png) center right no-repeat; padding-right: 55px; margin-right: 35px;">
+					<img src="../../clinic/image/mzfw_icon1.png" />
+				</div>
+			</a> <a onclick="submit(2)" class="weui_cell"
+				style="height: 160px;">
+				<div class="weui_cell_hd">
+					<img src="" style="width: 40px; display: block" />
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p style="font-size: 32px; color: #5e656f; margin-bottom: 38px;">儿童速诊童</p>
+					<p style="font-size: 26px; color: #7c7c7c;">专业护士/一站式服务/30分钟速诊通</p>
+				</div>
+				<div class="weui_cell_ft"
+					style="background: url(../../clinic/image/right_arrow.png) center right no-repeat; padding-right: 55px; margin-right: 35px;">
+					<img src="../../clinic/image/mzfw_icon2.png" />
+				</div>
+			</a> <a  onclick="submit(3)" class="weui_cell"
+				style="height: 160px;">
+				<div class="weui_cell_hd">
+					<img src="" style="width: 40px; display: block" />
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<p style="font-size: 32px; color: #5e656f; margin-bottom: 38px;">儿童安诊通</p>
+					<p style="font-size: 26px; color: #7c7c7c;">专业护士/一站式服务/安全便捷</p>
+				</div>
+				<div class="weui_cell_ft"
+					style="background: url(../../clinic/image/right_arrow.png) center right no-repeat; padding-right: 55px; margin-right: 35px;">
+					<img src="../../clinic/image/mzfw_icon3.png" />
+				</div>
+			</a>
+		</form>
+	</div>
+</body>
+</html>

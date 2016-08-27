@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
+<meta name="viewport" id="WebViewport"
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+<link rel="stylesheet" th:href="@{/css/weui.min.css}"
+	href="../../clinic/css/weui.min.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../clinic/css/weixin.css" />
+<script src="../../clinic/js/js_adaption.js" th:src="@{/js/js_adaption.js}">
+	
+</script>
+<script th:inline="javascript">
+	function submit() {
+		document.getElementById("form").submit();
+	}
+</script>
+</head>
+<body class="body1">
+ 	<div class="header1">
+	      <p class="biaoqian">投诉建议</p>
+	</div>
+	<div align="center">
+		<form id="form" th:action="@{save}" th:object="${evaluate}" action="#"
+			method="post">
+			<input type="hidden" th:field="*{uid}" th:value="${uid}"/>
+			<textarea rows="12" class="textarea2" th:field="*{text}"
+				style="margin-top: 20px; height: 200px"
+				placeholder="我们尊重客户懂得聆听，感谢您的宝贵意见！"></textarea>
+			<div class="buton" style="margin-top: 20px">
+				<input type="button" class="weui_btn weui_btn_primary"
+					onclick="submit()" value="提交" />
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	
+<head th:include="head :: header" />
+<title>保管家信息平台</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../back-test/css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/weui.css}"
+	href="../../back-test/css/weui.css" />
+<link rel="stylesheet" th:href="@{/css/example.css}"
+	href="../../back-test/css/example.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-responsive.min.css}"
+	href="../../back-test/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" th:href="@{/css/colorpicker.css}"
+	href="../../back-test/css/colorpicker.css" />
+<link rel="stylesheet" th:href="@{/css/datepicker.css}"
+	href="../../back-test/css/datepicker.css" />
+<link rel="stylesheet" th:href="@{/css/uniform.css}"
+	href="../../back-test/css/uniform.css" />
+<link rel="stylesheet" th:href="@{/css/select2.css}"
+	href="../../back-test/css/select2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-style2.css}"
+	href="../../back-test/css/matrix-style2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-media.css}"
+	href="../../back-test/css/matrix-media.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-wysihtml5.css}"
+	href="../../back-test/css/bootstrap-wysihtml5.css" />
+	
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.css}"
+		href="../../font-awesome/css/font-awesome.css" />	
+
+ <script th:src="@{/js/jquery.min.js}" src="../../js/jquery.min.js"></script> 
+<script th:src="@{/js/jquery.dataTables.min.js}" src="../../js/jquery.dataTables.min.js"></script> 
+<script th:src="@{/js/jquery.leanModal.min.js}" src="../../js/jquery.leanModal.min.js"></script>
+<style>
+	.control-group .controls label{
+		display:inline-block;
+	}
+	table{
+		margin-top:10px;
+	}
+	#update{
+		height:250px;
+	}
+</style>
+<!-- </head> -->
+
+<script th:inline="javascript" >
+var value;
+$(function(){
+	//<![CDATA[
+	
+	var a = [[${list.size()}]];
+	var b = parseInt(a/10)+1;
+	$('.data-table').dataTable({
+	        
+			"oLanguage": {
+				"sLengthMenu": '每页显示 10 条记录共'+a+'条记录共'+b+'页',
+				"sSearch": "查找：",
+				"sZeroRecords": "未找到相关记录",
+				"sEmptyTable": "没有记录",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sLast": "末页",
+					"sNext": "下一页",
+					"sPrevious": "上一页"
+				 }
+				
+			},
+			"bJQueryUI": true,
+			"sPaginationType": "full_numbers",
+			"sDom": '<""l>t<"F"fp>'
+			
+		});
+	});
+	
+	function changeStatus(index,status){
+		var param=index+" "+status;
+		value =document.getElementById(index);
+		$.get("/dictionary/updateStatus?param="+param,null,callback); 
+
+		
+
+	}
+	
+	function callback(data){
+	
+		if(data=="1"){
+			value.innerHTML="开启";
+		}else{
+			value.innerHTML="关闭";
+		}
+	}
+//]]> 
+</script>
+<body>
+	<div id="content">
+  <div id="content-header">
+      <h1>字典管理</h1>
+  </div>
+  <div class="container-fluid">
+			
+		<div class="row-fluid">
+      <div class="span12">
+		<div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>字典详情 </h5>
+         
+              <a class="btn btn-info" style="float:right;" id="add"  href = "#" th:href="@{add_sub(dId=${dId})}">添加子字典</a>
+                        
+          </div>
+          <div class="widget-content nopadding">
+            <table id="table" class="table table-bordered data-table">
+              <thead>
+                <tr>
+                  <th>子字典名称</th>
+                  <th>子字典值</th>
+                  <th>子字典状态</th>
+                  <th>操作</th>
+             
+                </tr>
+              </thead>
+              <tbody>
+					<tr th:each="subdictionary,index: ${list}">  
+			            <td th:text="${subdictionary.name}"></td>  
+			             <td th:text="${subdictionary.value}"></td>  
+			            <td >
+			              	<div th:switch="${subdictionary.status}">
+			              	<p  th:case="0">无效</p>
+			              	<p  th:case="1">有效</p>
+			              </div> 
+			            </td>  
+			        <td>
+			          <div>
+			           <a  style="width:33%;float:left">详情</a>
+			           	
+			           
+			          </div>
+			          </td>
+			         </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

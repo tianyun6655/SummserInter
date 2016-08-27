@@ -1,0 +1,280 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+
+<title>保管家信息平台登录</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+		href="../../back-test/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap-responsive.min.css}"
+		href="../../back-test/css/bootstrap-responsive.min.css" />
+	<link rel="stylesheet" th:href="@{/css/matrix-style.css}"
+		href="../../back-test/css/matrix-style.css" />
+	<link rel="stylesheet" th:href="@{/css/matrix-media.css}"
+		href="../../back-test/css/matrix-media.css" />
+	<link rel="stylesheet" th:href="@{/css/leanmodel.css}"
+		href="../../back-test/css/leanmodel.css" />
+	<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.css}"
+		href="../../back-test/font-awesome/css/font-awesome.css" />
+	<script th:src="@{/js/excanvas.min.js}" src="../../back-test/js/excanvas.min.js"></script>
+	<script th:src="@{/js/jquery.min.js}" src="../../back-test/js/jquery.min.js"></script>
+	<script th:src="@{/js/jquery.ui.custom.js}" src="../../back-test/js/jquery.ui.custom.js"></script>
+	<script th:src="@{/js/bootstrap.min.js}" src="../../back-test/js/bootstrap.min.js"></script>
+	<script th:src="@{/js/nicescroll/jquery.nicescroll.min.js}" src="../../back-test/js/nicescroll/jquery.nicescroll.min.js"></script>
+    <script th:src="@{/js/matrix.js}" src="../../back-test/js/matrix.js"></script>
+    <script type ="text/javascript" src="../../back-test/js/jquery.leanModal.min.js" th:src="@{/js/jquery.leanModal.min.js}"></script>
+    <style type="text/css">
+        #update {
+			height: 300px;
+		}
+    </style>
+
+    
+</head>
+<body>
+
+	<!--Header-part-->
+	<div id="header">
+		<h1>
+			<a href="dashboard.html">保管家信息系统平台</a>
+		</h1>
+		<!-- 左侧菜单值 -->
+		<input value="Hello" style="display: none;" id="power"/>
+	</div>
+	<!--close-Header-part-->
+
+	<!--top-Header-menu-->
+	<div id="user-nav" class="navbar navbar-inverse">
+		<ul class="nav">
+			<li class="dropdown" id="profile-messages">
+			<a title="" href="#"
+				data-toggle="dropdown" data-target="#profile-messages"
+				class="dropdown-toggle"> 
+				<i class="icon icon-user"></i>
+				<span class="text">欢迎您</span>
+			</a>
+			 </li>
+
+
+			<li class=""><a title="" href="logout.do">
+			<i class="icon icon-share-alt"></i>
+			 <span class="text">&nbsp;退出系统</span></a></li>
+		</ul>
+	</div>
+	<!--close-top-Header-menu-->
+
+	<!--start-top-serch-->
+
+	<!--close-top-serch-->
+
+	<!--sidebar-menu-->
+	<div id="sidebar" style="OVERFLOW-Y: auto; OVERFLOW-X: hidden;">
+		<ul>
+			<li class="submenu active">
+                <a class="menu_a" link="#">
+	            <i class="icon icon-table"></i>
+	            <span>欢迎</span></a>
+            </li>
+			<!-- ================================= -->
+			<li class="submenu" id="usermenu" >
+				<a href="#">
+					<i class="icon icon-table"></i>
+					<span>用户管理</span>
+					<span class="label label-important"></span>
+				</a>
+				<ul>
+					<li>
+						<a class="menu_a"   link ="sysuser/list">
+							<i class="icon icon-caret-right"></i>
+							用户信息
+						</a>
+					</li>
+				</ul>
+			</li>
+			<!-- ================================= -->
+			<li class="submenu" id="patientmenu" >
+				<a href="#">
+					<i class="icon icon-table"></i>
+					<span>预约管理</span>
+					<span class="label label-important"></span>
+				</a>
+				<ul>
+					<li>
+						<a class="menu_a" link="patient/list">	
+							<i class="icon icon-caret-right"></i>
+							预约列表			
+						</a>
+					</li>
+				</ul>
+			</li>
+			<!-- ======================================== -->
+				<li class="submenu" id="patientmenu" >
+				<a href="#">
+					<i class="icon icon-table"></i>
+					<span>保管家卡片管理</span>
+					<span class="label label-important"></span>
+				</a>
+				<ul>
+					<li>
+						<a class="menu_a" link="card/list">	
+							<i class="icon icon-caret-right"></i>
+							所有卡片详情			
+						</a>
+					</li>
+					<li>
+						<a class="menu_a" link="code/list">	
+							<i class="icon icon-caret-right"></i>
+							手机验证码详情			
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="submenu" id="patientmenu" >
+				<a href="#">
+					<i class="icon icon-table"></i>
+					<span>客户管理</span>
+					<span class="label label-important"></span>
+				</a>
+				<ul>
+					<li>
+						<a class="menu_a" link="user/list">	
+							<i class="icon icon-caret-right"></i>
+							客户详情			
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="submenu" id="patientmenu" >
+				<a href="#">
+					<i class="icon icon-table"></i>
+					<span>问题反馈</span>
+					<span class="label label-important"></span>
+				</a>
+				<ul>
+					<li>
+						<a class="menu_a" link="evaluate/list">	
+							<i class="icon icon-caret-right"></i>
+							顾客意见反馈			
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="submenu" id="patientmenu" >
+				<a href="#">
+					<i class="icon icon-table"></i>
+					<span>系统字典</span>
+					<span class="label label-important"></span>
+				</a>
+				<ul>
+					<li>
+						<a class="menu_a" link="dictionary/list">	
+							<i class="icon icon-caret-right"></i>
+							字典详情			
+						</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+	<!--sidebar-menu-->
+
+	<!--main-container-part-->
+	<div id="content">
+		<!--breadcrumbs-->
+		<!--End-breadcrumbs-->
+		<iframe src="welcome" id="iframe-main" frameborder='0'
+			style="width: 100%; height: 100%">
+			</iframe>
+		<!-- <div id="update" style="display: none">
+			<h1 class="tantitle">修改密码</h1>
+			<form id="upform" name="reg_testdate1" method="post"
+				action="index.html" style="margin-left: 30px;">
+				<label for="taskname">请输入原密码：</label> <input type="password"
+					id="tip" class='txtfield'></input> <label for="taskname">请输入新密码：</label>
+				<input type="password" id="tip" class='txtfield'></input> <label
+					for="taskname">确认密码：</label> <input type="password" id="tip"
+					class='txtfield'></input> <input type="submit" name="loginbtn1"
+					id="loginbtn1" class="okbutton" value="确定"
+					style="margin-left: 220px; margin-top: -4px;">
+			</form>
+		</div> -->
+	</div>
+	<!--end-main-container-part-->
+
+
+
+
+	<script th:inline="javascript">
+		//初始化相关元素高度
+		function init() {
+			$("body").height($(window).height() - 80);
+			$("#iframe-main").height($(window).height());
+			$("#sidebar").height($(window).height() - 50);
+		}
+
+		$(function() {
+			init();
+			$(window).resize(function() {
+				init();
+			});
+		});
+
+		// This function is called from the pop-up menus to transfer to
+		// a different page. Ignore if the value returned is a null string:
+		function goPage(newURL) {
+			// if url is empty, skip the menu dividers and reset the menu selection to default
+			if (newURL != "") {
+				// if url is "-", it is this page -- reset the menu:
+				if (newURL == "-") {
+					resetMenu();
+				}
+				// else, send page to designated URL            
+				else {
+					document.location.href = newURL;
+				}
+			}
+		}
+
+		// resets the menu selection upon entry to this page:
+		function resetMenu() {
+			document.gomenu.selector.selectedIndex = 2;
+		}
+
+		// uniform使用示例：
+		// $.uniform.update($(this).attr("checked", true));
+	</script>
+
+	<script th:inline="javascript">
+		$(function() {
+			$('.eupdatetrigger').leanModal({
+				top : 110,
+				overlay : 0.45,
+				closeButton : ".hidemodal"
+			});
+		});
+	</script>
+	<!-- 权限控制模块
+	<script th:inline="javascript">
+		$(function() {
+			var power = $('#power').val();
+			if (power.indexOf("保险模块") >= 0) {
+				$('#insurancemenu').css("display", "");
+			}
+			if (power.indexOf("任务模块") >= 0) {
+				$('#taskmenu').css("display", "");
+			}
+			if (power.indexOf("绩效模块") >= 0) {
+				$('#grademenu').css("display", "");
+			}
+			if (power.indexOf("用户模块") >= 0) {
+				$('#usermenu').css("display", "");
+			}
+			if (power.indexOf("日志模块") >= 0) {
+				$('#logmenu').css("display", "");
+			}
+		}); 
+	</script>
+	 -->
+</body>
+</html>

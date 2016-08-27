@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+	
+<head th:include="head :: header" />
+<title>保管家信息平台</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../back-test/css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/weui.css}"
+	href="../../back-test/css/weui.css" />
+<link rel="stylesheet" th:href="@{/css/example.css}"
+	href="../../back-test/css/example.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-responsive.min.css}"
+	href="../../back-test/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" th:href="@{/css/colorpicker.css}"
+	href="../../back-test/css/colorpicker.css" />
+<link rel="stylesheet" th:href="@{/css/datepicker.css}"
+	href="../../back-test/css/datepicker.css" />
+<link rel="stylesheet" th:href="@{/css/uniform.css}"
+	href="../../back-test/css/uniform.css" />
+<link rel="stylesheet" th:href="@{/css/select2.css}"
+	href="../../back-test/css/select2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-style2.css}"
+	href="../../back-test/css/matrix-style2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-media.css}"
+	href="../../back-test/css/matrix-media.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-wysihtml5.css}"
+	href="../../back-test/css/bootstrap-wysihtml5.css" />
+	
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.css}"
+		href="../../font-awesome/css/font-awesome.css" />	
+
+<script th:src="@{/js/jquery.min.js}" src="../../js/jquery.min.js"></script> 
+<script th:src="@{/js/jquery.dataTables.min.js}" src="../../js/jquery.dataTables.min.js"></script> 
+<script th:src="@{/js/jquery.leanModal.min.js}" src="../../js/jquery.leanModal.min.js"></script>
+<style>
+	.control-group .controls label{
+		display:inline-block;
+	}
+	table{
+		margin-top:10px;
+	}
+	#update{
+		height:250px;
+	}
+</style> 
+<script th:inline="javascript" >
+$(function(){
+	//<![CDATA[
+	var a = [[${list.size()}]];
+	var b = parseInt(a/10)+1;
+	$('.data-table').dataTable({
+	        
+			"oLanguage": {
+				"sLengthMenu": '每页显示 10 条记录共'+a+'条记录共'+b+'页',
+				"sSearch": "查找：",
+				"sZeroRecords": "未找到相关记录",
+				"sEmptyTable": "没有记录",
+				"oPaginate": {
+					"sFirst": "首页",
+					"sLast": "末页",
+					"sNext": "下一页",
+					"sPrevious": "上一页"
+				 }
+				
+			},
+			"bJQueryUI": true,
+			"sPaginationType": "full_numbers",
+			"sDom": '<""l>t<"F"fp>'
+			
+		});
+	});
+//]]> 
+</script>
+<!-- </head> -->
+<body>
+	<div id="content">
+  <div id="content-header">
+      <h1>人员管理</h1>
+  </div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+		<div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>人员详情</h5>
+            <!-- <input type="text" th:text="${list.size()}"/> -->
+        <a class="btn btn-info" style="float:right;" id="add"  href = "#" th:href="@{form}">增加人员</a>
+            
+          </div>
+          <div class="widget-content nopadding">
+            <table class="table table-bordered data-table">
+              <thead>
+                <tr>
+                  <th>姓名</th>
+                  <th>电话</th>
+                  <th>是否为医护人员</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+					<tr th:each="sysUser : ${list}">  
+			            <td th:text="${sysUser.name}"></td>  
+			            <td th:text="${sysUser.mobile}"></td>  
+			            <td>
+			            <div th:switch="${sysUser.isService}">
+						  <p th:case="0">否</p>
+						  <p th:case="1">是</p>
+						</div>
+			            </td>  
+						
+			 			<td>
+			      
+						<!-- 根据状态跳转 -->
+							  <a  href="#"  th:href="@{detail(id=${sysUser.id})}">详情</a>
+					  <!--     <a href="#"  th:href="@{service(pid=${patient.pid})}" >分配</a> -->
+						</td>  
+						
+			          </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

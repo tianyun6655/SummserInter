@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" id="WebViewport" 
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+
+<link rel="stylesheet" th:href="@{/css/weui.min.css}"
+	href="../../clinic/css/weui.min.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../clinic/css/weixin.css" />
+<script src="../../clinic/js/js_adaption.js" th:src="@{/js/js_adaption.js}"> </script>
+	
+</head>
+<body class="body1">
+	<div class="header1">
+		<p class="biaoqian">预约记录</p>
+	</div>
+	<div class="weui_cells wenben" th:each="patient:${patients}">
+		<div class="weui_cell">
+			<div class="weui_cell inputcell" th:if="${patient.status==-1||patient.status==0}">
+			   <img  src="../../clinic/image/false.png" class="img1"/>
+			   <p class="yuyue2">已取消</p>
+			</div>
+			<div class="weui_cell" th:if="${patient.status==1||patient.status==2||patient.status==3||patient.status==4||patient.status==5||patient.status==6}">
+			   <img  src="../../clinic/image/true.png" class="img1"/>
+			   <p class="yuyue1">已预约</p>
+			</div>
+			<div class="weui_cell" th:if="${patient.status==7}">
+			  <img src="../../clinic/image/yes.png" class="img1"/>
+			  <p class="yuyue2">已服务</p>
+			</div>
+		</div>
+		<div class="weui_cell inputcell">
+			<p class="pbiaoqian1" th:text="${patient.name}" ></p>
+			<p class="pshijian1"  th:text="${patient.date}" ></p>
+
+		</div>
+		<div class="weui_cell_hd">
+		    <div th:switch="${patient.hid}">
+				<p class="pbiaoqian4" th:case="1">儿童医院（北京西路门诊部）</p>
+				<p class="pbiaoqian4" th:case="2">儿科医院（枫林路门诊部）</p>
+				<p class="pbiaoqian4" th:case="3">儿童医学中心</p>
+				<p class="pbiaoqian4" th:case="4">新华医院儿科</p>
+				<p class="pbiaoqian4" th:case="5">东方医院南院儿科</p>
+				<p class="pbiaoqian4" th:case="6">上海交通大学附属第一人民医院（南院）</p>
+				<p class="pbiaoqian4" th:case="7">上海交通大学附属第九人民医院（总院）</p>
+				<p class="pbiaoqian4" th:case="8">上海交通大学附属仁济医院（南院)</p>
+				<p class="pbiaoqian4" th:case="9">上海同济大学附属东方医院（南院）</p>
+				<p class="pbiaoqian4" th:case="10">上海同济大学附属同济医院</p>
+				<p class="pbiaoqian4" th:case="11">上海同济大学附属第十人民医院</p>
+				<p class="pbiaoqian4" th:case="12">上海中医药大学附属曙光医院（东院））</p>
+				<p class="pbiaoqian4" th:case="13">上海中医药大学附属龙华医院</p>
+				<p class="pbiaoqian4" th:case="14">上海同济大学附属岳阳医院</p>
+				<p class="pbiaoqian4" th:case="15">上海复旦大学附属妇产科医院（杨浦分院）</p>
+				<p class="pbiaoqian4" th:case="16">上海同济大学附属第一妇婴保健院（东院)</p>
+				<p class="pbiaoqian4" th:case="17">上海交通大学附属儿童医院（北京西路）</p>
+				<p class="pbiaoqian4" th:case="18">儿上海复旦大学附属华山医院</p>
+				<p class="pbiaoqian4" th:case="19">上海交通大学附属瑞金医院（卢湾分院）</p>
+				<p class="pbiaoqian4" th:case="20">上海复旦大学附属中山医院（逸仙医院）</p>
+				<p class="pbiaoqian4" th:case="21">上海复旦大学附属儿科医院（枫林院区）</p>
+				<p class="pbiaoqian4" th:case="22">上海交通大学附属上海儿童医学中心</p>
+				<p class="pbiaoqian4" th:case="23">上海交通大学附属新华医院</p>
+				<p class="pbiaoqian4" th:case="24">海同济大学附属东方医院（北院）</p>
+				<p class="pbiaoqian4" th:case="25">上海市第五人民医院</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

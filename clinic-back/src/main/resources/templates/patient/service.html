@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../back-test/css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/weui.css}"
+	href="../../back-test/css/weui.css" />
+<link rel="stylesheet" th:href="@{/css/example.css}"
+	href="../../back-test/css/example.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-responsive.min.css}"
+	href="../../back-test/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" th:href="@{/css/colorpicker.css}"
+	href="../../back-test/css/colorpicker.css" />
+<link rel="stylesheet" th:href="@{/css/datepicker.css}"
+	href="../../back-test/css/datepicker.css" />
+<link rel="stylesheet" th:href="@{/css/uniform.css}"
+	href="../../back-test/css/uniform.css" />
+<link rel="stylesheet" th:href="@{/css/select2.css}"
+	href="../../back-test/css/select2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-style2.css}"
+	href="../../back-test/css/matrix-style2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-media.css}"
+	href="../../back-test/css/matrix-media.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-wysihtml5.css}"
+	href="../../back-test/css/bootstrap-wysihtml5.css" />
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.css}"
+		href="../../back-test/font-awesome/css/font-awesome.css" />	 
+<title>病人详情</title>
+<script th:inline="javascript">
+var count="0";
+function submit() {
+
+ 	var backRemark = document.getElementById("backRemark").value;
+    var suid = document.getElementById("suid").value;
+    
+	document.getElementById("form").submit();
+	
+	
+}
+
+
+
+</script>
+
+</head>
+<body style="ontouchstart">
+  <div id="content">
+	<div id="content-header">
+	    <h1>就诊信息</h1>
+	</div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+            <h5>就诊者基本信息</h5>
+            </div>
+	<div class="widget-content nopadding" style="margin:auto">
+		<form id="form" class="form-horizontal"  th:action="@{updateservice}" th:object="${patient}"
+			action="#" method="post" >
+						<input type="hidden" th:field="*{cid}" th:value="${cid}"/>
+			
+			<input type="hidden" th:field="*{pid}" th:value="${pid}"/>
+			<input type="hidden" th:field="*{status}" th:value="${status}"/>
+			<input type="hidden" th:field="*{createTime}" th:value="${createTime}"/>
+			<input type="hidden" th:field="*{name}" th:value="${name}"/>
+			<input type="hidden" th:field="*{mobile}" th:value="${mobile}"/>
+			<input type="hidden" th:field="*{address}" th:value="${address}"/>
+			<input type="hidden" th:field="*{cards}" th:value="${cards}"/>
+			<input type="hidden" th:field="*{hid}" th:value="${hid}"/>
+			<input type="hidden" th:field="*{office}" th:value="${office}"/>
+			<input type="hidden" th:field="*{date}" th:value="${date}"/>
+			<input type="hidden" th:field="*{registerType}" th:value="${registerType}"/>
+			<input type="hidden" th:field="*{contact}" th:value="${contact}"/>
+		    <input type="hidden" th:field="*{relation}" th:value="${relation}"/>
+		    <input type="hidden" th:field="*{symptom}" th:value="${symptom}"/>
+			<input type="hidden" th:field="*{remark}" th:value="${remark}"/>
+			<input type="hidden" th:field="*{sex}" th:value="${sex}"/>		
+		    <input type="hidden" th:field="*{time}" th:value="${time}"/>		
+			<input type="hidden" th:field="*{isRegister}" th:value="${isRegister}"/>	
+		    <input type="hidden" th:field="*{productType}" th:value="${productType}"/>
+			<input type="hidden" th:field="*{sex}" th:value="${sex}"/>
+				
+			 		
+			<div class="control-group">
+	            <label class="control-label">就诊病人姓名</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{name}" placeholder="请输入就诊者姓名" disabled="true" />
+	            </div>
+	          <!--  <div id="name_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>  -->
+        	</div>
+        		
+			<div class="control-group">
+	           <label class="control-label">联系方式</label>
+	            <div class="controls">
+	                <input class="required" type="number" th:field="*{mobile}" placeholder="请输入您的联系方式" disabled="true" />
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	
+        	
+        	<div class="control-group">
+	           <label class="control-label">其它联系方式</label>
+	            <div class="controls">
+	                <input class="required" type="number" th:field="*{contact}" placeholder="请输入您的联系方式" disabled="true" />
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	      <div class="control-group">
+	  	            <label class="control-label">产品类型</label>
+			<div class="controls" th:switch="${patient.productType}">
+				<input class="required"   disabled="true" type="text" th:case="1"  value="诊无忧"/>
+				<input class="required"   disabled="true" type="text" th:case="2" value="速诊通"/>
+				<input class="required"   disabled="true" type="text" th:case="3" value="安诊通"/>
+			</div>
+			
+		</div>
+        		<div class="control-group">
+	            <label class="control-label">就诊日期</label>
+	            <div class="controls">
+	                <input class="required" type="date" th:field="*{date}" value="${#dates.format(date)}" disabled="true"/>
+	            </div>
+	        </div>
+	        
+	          <div class="control-group">
+	            <label class="control-label">就诊时间</label>
+	            <div class="controls">
+	                <input class="required" type="text"  th:field="*{time}" value="${time}"  disabled="true"/>
+	            </div>
+	        </div>
+	    
+	     
+	        
+        	 <div class="control-group">
+	            <label class="control-label">就医医院</label>
+	            <div class="controls">
+
+      				<div  th:switch="${patient.hid}" >
+      			     <input  th:case="0"  disabled = "true"  type="text" class="required" value = "请选择"  />
+				     <input th:case="1"  disabled = "true"  type="text" class="required" value = "儿童医院（北京西路门诊部）"  />
+					 <input  th:case="2"  disabled = "true"  type="text" class="required" value = "儿科医院（枫林路门诊部）"  />
+					 <input th:case="3"  disabled = "true"  type="text" class="required" value = "儿童医学中心"  />
+					 <input  th:case="4"  disabled = "true"  type="text" class="required" value = "新华医院儿科"  />
+					 <input  th:case="5"  disabled = "true"  type="text" class="required" value = "东方医院南院儿科"  />
+					 <input  th:case="6"  disabled = "true"  type="text" class="required" value = "上海交通大学附属第一人民医院（南院）"  />
+					 <input  th:case="7"  disabled = "true"  type="text" class="required" value = "上海交通大学附属第九人民医院（总院）"  />
+					 <input  th:case="8"  disabled = "true"  type="text" class="required" value = "上海交通大学附属仁济医院（南院)"  />
+					<input  th:case="9"  disabled = "true"  type="text" class="required" value = "上海同济大学附属东方医院（南院）"  />
+					 <input  th:case="10"  disabled = "true"  type="text" class="required" value = "上海同济大学附属同济医院"  />
+				     <input  th:case="11"  disabled = "true"  type="text" class="required" value = "上海同济大学附属第十人民医院"  />
+				  	<input  th:case="12"  disabled = "true"  type="text" class="required" value = "上海中医药大学附属曙光医院（东院）"  />
+					<input  th:case="13"  disabled = "true"  type="text" class="required" value = "上海中医药大学附属龙华医院"  />
+					<input  th:case="14"  disabled = "true"  type="text" class="required" value = "上海同济大学附属岳阳医院"  />
+					 <input  th:case="15"  disabled = "true"  type="text" class="required" value = "上海复旦大学附属妇产科医院（杨浦分院）"  />
+					 <input  th:case="16"  disabled = "true"  type="text" class="required" value = "上海同济大学附属第一妇婴保健院（东院)"  />
+				     <input  th:case="17"  disabled = "true"  type="text" class="required" value = "上海交通大学附属儿童医院（北京西路）"  />
+				   	<input  th:case="18"  disabled = "true"  type="text" class="required" value = "上海复旦大学附属华山医院"  />
+					 <input  th:case="19"  disabled = "true"  type="text" class="required" value = "上海交通大学附属瑞金医院（卢湾分院）"  />
+					 <input  th:case="20"  disabled = "true"  type="text" class="required" value = "上海复旦大学附属中山医院（逸仙医院）"  />
+					 <input  th:case="21"  disabled = "true"  type="text" class="required" value = "上海复旦大学附属儿科医院（枫林院区）"  />
+                     <input  th:case="22"  disabled = "true"  type="text" class="required" value = "上海交通大学附属上海儿童医学中心"  />
+					 <input th:case="23"  disabled = "true"  type="text" class="required" value = "上海交通大学附属新华医院"  />
+					 <input  th:case="24"  disabled = "true"  type="text" class="required" value = "海同济大学附属东方医院（北院）"  />
+					 <input  th:case="25"  disabled = "true"  type="text" class="required" value = "上海市第五人民医院"  />
+	            </div>
+	            </div>
+        	</div>
+        	
+        	<div class="control-group">
+        	 <label class="control-label">科室</label>
+        	<div class="controls">
+	        <!-- 	<select th:field="*{office}" class="required" disabled="true" >
+		        	<option value="0" th:selected="selected">请选择</option>
+		        	<option value="1">内科</option>
+		        	<option value="2">外科</option>
+		        	<option value="3">妇科</option>
+		        	<option value="4">儿科</option>
+		        	<option value="5">骨科</option>
+		        	<option value="6">口腔科</option>
+		        	<option value="7">皮肤科</option>
+		        	<option value="8">中医科</option>
+		        	<option value="9">五官科</option>
+		        	<option value="10">其他</option>
+	        	</select> -->
+	        	<div  th:switch="${patient.office}" >
+      			     <input  th:case="0" disabled = "true"  type="text" class="required" value = "请选择"  />
+				     <input  th:case="1"  disabled = "true"  type="text" class="required" value = "内科"  />
+					 <input  th:case="2"  disabled = "true"  type="text" class="required" value = "普外科"  />
+					 <input  th:case="3"  disabled = "true"  type="text" class="required" value = "儿童保健科"  />
+					 <input  th:case="4"  disabled = "true"  type="text" class="required" value = "骨科"  />
+					 <input  th:case="5"  disabled = "true"  type="text" class="required" value = "眼科"  />
+					 <input  th:case="6"  disabled = "true"  type="text" class="required" value = "耳鼻喉科"  />
+					 <input  th:case="7"  disabled = "true"  type="text" class="required" value = "皮肤科"  />
+					 <input  th:case="8"  disabled = "true"  type="text" class="required" value = "中医科"  />
+					 <input  th:case="9"  disabled = "true"  type="text" class="required" value = "口腔科"  />
+					 <input  th:case="11" disabled = "true"  type="text" class="required" value = "妇科"  />
+					 <input  th:case="10" disabled = "true"  type="text" class="required" value = "其他"  />
+					 <input  th:case="12" disabled = "true"  type="text" class="required" value = "儿科"  />
+					 
+					 
+	            </div>
+        	</div>
+        	</div>
+        
+        	
+        	<div class="control-group">
+	             <label class="control-label">与病患关系</label>
+	            <div class="controls">
+  
+            	<div  th:switch="${patient.relation}" >
+      			     <input  th:case="0"  disabled = "true"  type="text" class="required" value = "请选择"  />
+				     <input  th:case="1"  disabled = "true"  type="text" class="required" value = "父母"  />
+					 <input  th:case="2"  disabled = "true"  type="text" class="required" value = "其他"  />
+
+	            </div>
+	            </div>
+	        </div> 
+	        
+            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+               <h5>就医需求信息</h5>
+            </div>
+            			
+           
+        	  <div class ="control-group">
+	             <label class = "control-label">代办挂号</label>
+	              <div class="controls">
+	               <div th:switch="${patient.isRegister}" >
+	                 <input disabled="true" th:case="1" type="text" class="required" value = "是" />
+	                 <input disabled="true" th:case="0" type="text" class="required" value = "否" />
+	              </div>
+	             </div>
+	         </div>
+        	  <div class="control-group">
+	             <label class="control-label">挂号类型</label>
+	             <div class="controls" >
+	            <div  th:switch="${patient.registerType}" >
+      			     <input   th:case="0" disabled = "true"  type="text" class="required" value = "请选择"  />
+				     <input   th:case="1"  disabled = "true"  type="text" class="required" value = "普通"  />
+					 <input   th:case="2"  disabled = "true"  type="text" class="required" value = "专家【不保证预约成功】"/>
+	            </div>
+	            </div>
+	        </div>
+			<div class="control-group">
+	            <label class="control-label">联系地址</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{address}" placeholder="请输入就诊者联系地址" disabled="true" />
+	            </div>
+	            
+	            <div id="address_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	
+         	<div class="control-group">
+	            <label class="control-label">身份证号码</label>
+	            <div class="controls">
+	                <input class="required" type="number" th:field="*{cards}" placeholder="请输入就诊者身份证号" disabled="true" />
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+		
+	      
+	        
+	        <div class="control-group">
+	           <label class="control-label">症状</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{symptom}" placeholder="请输入病患症状" disabled="true"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+	        
+	        
+        	  <div class="control-group">
+	           <label class="control-label">备注</label>
+	            <div class="controls">
+	                <textarea  class="required" type="text" th:field="*{remark}" placeholder="备注" disabled="true" style="height:111px"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	
+        	  <div class="control-group">
+	           <label class="control-label">后台备注</label>
+	            <div class="controls" th:switch="${patient.status}">
+	                <textarea th:case="2" class="required" type="text" th:field="*{backRemark}" placeholder="请输入额外备注"   style="height:111px" />
+	            	 <textarea th:case="3" class="required" type="text" th:field="*{backRemark}" placeholder="请输入额外备注"   style="height:111px" disabled="true" />
+	                 	            	 <textarea th:case="6" class="required" type="text" th:field="*{backRemark}" placeholder="请输入额外备注"   style="height:111px" disabled="true" />
+	                 	            	 <textarea th:case="7" class="required" type="text" th:field="*{backRemark}" placeholder="请输入额外备注"   style="height:111px" disabled="true" />
+	                 
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	
+        	
+	        <div class="control-group">
+        	 <label class="control-label">分配工作人员</label>
+        	<div class="controls" th:switch="${patient.status}">
+	        	<select  th:case = "2" th:field="*{suid}" class="required"  >
+	        	  <option th:each="sysUser : ${list}"  th:value="${sysUser.id}" th:inline="text" >[[${sysUser.name}]]</option>
+	        	</select>
+	        	<select  th:case = "3" th:field="*{suid}" class="required"  disabled ="true" >
+	        	  <option th:each="sysUser : ${list}"  th:value="${sysUser.id}" th:inline="text" >[[${sysUser.name}]]</option>
+	        	</select>
+	        	<select  th:case = "6" th:field="*{suid}" class="required"  disabled ="true" >
+	        	  <option th:each="sysUser : ${list}"  th:value="${sysUser.id}" th:inline="text" >[[${sysUser.name}]]</option>
+	        	</select>
+	        	<select  th:case = "7" th:field="*{suid}" class="required"  disabled ="true" >
+	        	  <option th:each="sysUser : ${list}"  th:value="${sysUser.id}" th:inline="text" >[[${sysUser.name}]]</option>
+	        	</select>
+        	</div>
+        	</div>
+        	
+	        <div class="control-group">   
+	            <div th:switch = "${patient.status}">
+			   <a th:case  ="2" href="#" class="btn btn-success" style="width:100px;float:left;margin-left:70px;margin-bottom:5px;" onclick="submit()" >确认</a>
+			   <a th:case  ="3" href="#" class="btn btn-success" style="width:100px;float:left;margin-left:70px;margin-bottom:5px;" th:href="@{list}" >返回</a>
+		    	</div>
+			      <a  href="#" class="btn btn-success" th:href="@{cancelorder(pid=${patient.pid})}" style="width:100px;float:left;margin-left:150px;margin-bottom:5px; background-color:red">取消</a>			      
+		   </div>
+		   
+		   
+		</form>
+		    </div>
+		  </div>
+        </div>
+      </div>
+
+   </div>
+</div>
+</body>
+</html>

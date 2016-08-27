@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.framework.mapper.CodeMapper">
+ 
+<!--  <select id="countMobile" parameterType="String" resultType="int">
+  	select count(cid) from tb_code where mobile=#{mobile} and to_days(create_time) = to_days(now());
+  </select>
+  
+  <select id="getCode" parameterType="String" resultType="com.ijianbao.model.Code">
+  	select cid, mobile, code, invalid_time as invalidTime from tb_code where mobile=#{mobile} and invalid_time > now();
+  </select>
+  
+  <select id="getCodeByCode" parameterType="com.ijianbao.model.Code" resultType="com.ijianbao.model.Code">
+  	select cid, mobile, code, invalid_time as invalidTime from tb_code where mobile=#{mobile} and code=#{code} and invalid_time > now();
+  </select>
+  
+ <select id="getCode" parameterType="com.ijianbao.model.Code" resultType="com.ijianbao.model.Code">
+  	select cid, mobile, code, invalid_time from tb_code where mobile=#{mobile} and code=#{code}
+  </select>
+  
+ <insert id="generateCode" parameterType="com.ijianbao.model.Code" >
+ 	<selectKey keyProperty="cid" resultType="int" order="AFTER" >
+    	select LAST_INSERT_ID() as cid
+    </selectKey>
+ 	insert into tb_code(mobile,code,create_time,invalid_time) values (#{mobile},#{code},#{createTime},#{invalidTime})
+ </insert> -->
+ 
+ <insert id="saveCode"  parameterType="com.ijianbao.framework.bean.Code" >
+      <selectKey keyProperty = "cid" resultType ="int" order="AFTER">
+          select LAST_INSERT_ID()as cid
+     </selectKey>
+         insert into tb_code(mobile, code, type, status, create_time, invalid_time ) values (#{mobile},#{code},#{type},#{status},#{createTime},#{invalidTime})
+     
+ </insert>
+ 
+ <select id="list" resultType="com.ijianbao.framework.bean.Code">
+    select * from tb_code
+ </select>
+ 
+ <select id="getCodeByCid" parameterType="int" resultType="com.ijianbao.framework.bean.Code">
+        select mobile, code from tb_code where cid=#{cid}
+ </select>
+    <update id="updateStatus" parameterType="com.ijianbao.framework.bean.Code">
+       update tb_code set status = #{status} where cid = #{cid}
+    </update>
+</mapper>

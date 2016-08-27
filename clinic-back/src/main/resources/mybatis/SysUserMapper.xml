@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.framework.mapper.SysUserMapper">
+ 
+  <select id="findSysUser" parameterType="com.ijianbao.framework.bean.SysUser" resultType="com.ijianbao.framework.bean.SysUser">
+  	select id, name, mobile, password from sys_user where mobile=#{mobile};
+  </select>
+  
+  <insert id="saveSysUser" parameterType="com.ijianbao.framework.bean.SysUser" >
+ 	<selectKey keyProperty="id" resultType="int" order="AFTER" >
+    	select LAST_INSERT_ID() as id
+    </selectKey>
+ 	insert into sys_user(name, mobile, password, age, is_service,create_time,create_user,update_user,update_time) values 
+ 	                  (#{name}, #{mobile},#{password},#{age},#{isService},#{createTime},#{createUser},#{updateUser},#{updateTime})
+ </insert>
+ 
+ <select id="list" parameterType="java.util.HashMap" resultType="com.ijianbao.framework.bean.SysUser">
+  	   select id, name, mobile, is_service as isService, status from sys_user
+  </select>
+  
+  
+    <select id="getSysUser" parameterType="int" resultType="com.ijianbao.framework.bean.SysUser">
+  	select id, name, mobile, password,is_service as isService from sys_user where id=#{id};
+  </select>
+  
+  
+    <update id="updateSysUser" parameterType="com.ijianbao.framework.bean.SysUser">
+  	update sys_user set name = #{name}, mobile = #{mobile}, password = #{password}, is_service = #{isService} where id=#{id}
+   </update>
+   
+      <select id="getServices" parameterType="java.util.HashMap" resultType="com.ijianbao.framework.bean.SysUser">
+       select name,id from sys_user where is_service = 1
+   </select>
+   
+   <select id="getUserByMobile" parameterType="com.ijianbao.framework.bean.SysUser" resultType="com.ijianbao.framework.bean.SysUser">
+       select name, id from sys_user where mobile=#{mobile}
+   </select>
+   
+   <select id="getUserByMobile2" parameterType="String" resultType="com.ijianbao.framework.bean.SysUser">
+       select password, name, id from sys_user where mobile=#{mobile} and is_service =1
+   </select>
+</mapper>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" id="WebViewport"
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+<link rel="stylesheet" th:href="@{/css/weui.min.css}"
+	href="../../clinic/css/weui.min.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../clinic/css/weixin.css" />
+<script src="../../clinic/js/js_adaption.js"></script>
+</head>
+<body>
+	<div class="jianju">
+		<div>
+			<img id="photo2" src="../../clinic/image/nopermission.png"
+				style="width: 100%"/>
+		</div>
+		<div align="center" style="margin-top: 100px">
+			<p id="p2" class="biaoqian" th:text="${error}"/>
+		</div>
+	</div>
+</body>
+</html>

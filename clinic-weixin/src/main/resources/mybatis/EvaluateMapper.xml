@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.mapper.EvaluateMapper">
+ 
+ <insert id="saveEvaluate" parameterType="com.ijianbao.model.Evaluate" >
+ 	<selectKey keyProperty="eid" resultType="int" order="AFTER" >
+    	select LAST_INSERT_ID() as eid
+    </selectKey>
+ 	insert into tb_evaluate(uid, level, text, create_time) 
+ 		values 
+ 		(#{uid}, #{level}, #{text}, #{createTime})
+ </insert>
+</mapper>

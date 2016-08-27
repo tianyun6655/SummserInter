@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" id="WebViewport"
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+
+<link rel="stylesheet" th:href="@{/css/weui.min.css}"
+	href="../../clinic/css/weui.min.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../clinic/css/weixin.css" />
+<script src="../../clinic/js/jquery-1.7.2.js" th:src="@{/js/jquery-1.7.2.js}"></script>
+<script src="../../clinic/js/js_adaption.js" th:src="@{/js/js_adaption.js}">
+	
+</script>
+<script type="text/javascript">
+	$(function() {
+		$("#submit")
+				.click(
+						function() {
+							var name = $("#name").val().trim();
+							var type=$("#type").val();
+							var sex = $("#sex").val();
+							var mobile = $("#mobile").val().trim();
+							var hid = $("#hid").val();
+							var office = $("#office").val();
+							var date = $("#date").val();
+							var now = getNowFormatDate();
+							var startNum = parseInt(now.replace(/-/g, ''), 10);
+							var endNum = parseInt(date.replace(/-/g, ''), 10);
+							var result = parseInt(DateDiff(now, date), 10);
+							if (name == '') {
+								document.getElementById("name_warn").style.display = "";
+								return false;
+							} else if (sex == '0') {
+								document.getElementById("sex_warn").style.display = "";
+								return false;
+							} else if (mobile == '') {
+								document.getElementById("contact_warn").style.display = "";
+								document.getElementById("contact_warn").innerHTML = '联系方式不能为空！';
+								return false;
+							} else if (!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i
+									.test(mobile)) {
+
+								document.getElementById("contact_warn").style.display = "";
+								document.getElementById("contact_warn").innerHTML = '手机号不正确，请重新输入!';
+
+								return false;
+							} else if (date == '') {
+								document.getElementById("date_warn").innerHTML = '请选择就诊日期';
+								document.getElementById("date_warn").style.display = "";
+								return false;
+							} else if (hid == '0') {
+								document.getElementById("hid_warn").style.display = "";
+								return false;
+							} else if (office == '0') {
+								document.getElementById("office_warn").style.display = "";
+								return false;
+							} else if (startNum > endNum) {
+								document.getElementById("date_warn").innerHTML = '选择的日期不能在当前日期之前！';
+								document.getElementById("date_warn").style.display = "";
+								return false;
+							} else if (2 > result) {
+								document.getElementById("date_warn").innerHTML = '选择的日期必须在两个工作日之后！';
+								document.getElementById("date_warn").style.display = "";
+								return false;
+							} else {
+								var button = document.getElementById('submit');
+								button.send.onclick = function() {
+								};
+								return true;
+							}
+						});
+	});
+	function DateDiff(sDate1, sDate2) { //sDate1和sDate2是yyyy-MM-dd格式
+		var aDate, oDate1, oDate2, iDays;
+		aDate = sDate1.split("-");
+		oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]); //转换为yyyy-MM-dd格式
+		aDate = sDate2.split("-");
+		oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+		iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24); //把相差的毫秒数转换为天数
+
+		return iDays; //返回相差天数
+	}
+
+	function getNowFormatDate() {
+		var day = new Date();
+		var Year = 0;
+		var Month = 0;
+		var Day = 0;
+		var CurrentDate = "";
+		//初始化时间 
+		//Year= day.getYear();
+		Year = day.getFullYear();
+		Month = day.getMonth() + 1;
+		Day = day.getDate();
+		//Hour = day.getHours(); 
+		// Minute = day.getMinutes(); 
+		// Second = day.getSeconds(); 
+		CurrentDate += Year + "-";
+		if (Month >= 10) {
+			CurrentDate += Month + "-";
+		} else {
+			CurrentDate += "0" + Month + "-";
+		}
+		if (Day >= 10) {
+			CurrentDate += Day;
+		} else {
+			CurrentDate += "0" + Day;
+		}
+		return CurrentDate;
+	}
+
+	/* $(function(){
+		$("#isRegister").change(
+			function(){
+				$("#register_cell").toggle();
+				$("#information_cell").toggle();
+
+			}
+		)
+	})  */
+	//<![CDATA[
+	window.onload = function() {
+		var currentdate = new Date();
+
+		currentdate = new Date(currentdate.valueOf() + 2 * 24 * 60 * 60 * 1000);
+		var dd = currentdate.getDate();
+		var mmm = currentdate.getMonth() + 1;
+		var year = currentdate.getFullYear().toString();
+		var date = document.getElementById("date");
+
+		if (mmm < 10) {
+			if (dd < 10) {
+				date.setAttribute("min", year + "-" + "0" + mmm + "-" + "0"
+						+ dd);
+			} else {
+				date.setAttribute("min", year + "-" + "0" + mmm + "-" + dd);
+			}
+
+		} else {
+			if (dd < 10) {
+				date.setAttribute("min", year + "-" + mmm + "-" + "0" + dd);
+
+			} else {
+				date.setAttribute("min", year + "-" + mmm + "-" + dd);
+			}
+		}
+
+		
+
+	}
+	//]]> 
+
+	function nameCleanWarn() {
+		var name_warn = document.getElementById("name_warn");
+		name_warn.style.display = "none";
+	}
+	function contactCleanWarn() {
+		var contact_warn = document.getElementById("contact_warn");
+		contact_warn.style.display = "none";
+	}
+	function dateCleanWarn() {
+		var date_warn = document.getElementById("date_warn");
+		date_warn.style.display = "none";
+	}
+	function hidCleanWarn() {
+		var hid_warn = document.getElementById("hid_warn");
+		hid_warn.style.display = "none";
+	}
+	function officeCleanWarn() {
+		var office_warn = document.getElementById("office_warn");
+		office_warn.style.display = "none";
+	}
+	function typeCleanWarn() {
+		var office_warn = document.getElementById("type_warn");
+		office_warn.style.display = "none";
+	}
+
+	function idCleanWarn() {
+		var id_warn = document.getElementById("id_warn");
+		id_warn.style.display = "none";
+	}
+
+	function sexCleanWarn() {
+		var sex_warn = document.getElementById("sex_warn");
+		sex_warn.style.display = "none";
+	}
+</script>
+</head>
+<body class="body1">
+	<div class="header1">
+		<p class="biaoqian">就诊信息</p>
+	</div>
+	<form id="form" th:action="@{input}" th:object="${patient}"
+		method="post">
+
+		<input type="hidden" th:field="*{cid}" th:value="${cid}" />
+        <input type="hidden" th:field="*{registerType}" th:value="${registerType}"/>
+        <input type="hidden" th:field="*{address}" th:value="${address}"/>
+        <input type="hidden" th:field="*{cards}" th:value="${cards}"/>
+        <input type="hidden" th:field="*{productType}" th:value="${productType}"/>
+        
+        
+		<div class="weui_cells wenben">
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">姓名</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input class="weui_input" type="text" th:field="*{name}"
+						onfocus="nameCleanWarn()" placeholder="请输入就诊者姓名" />
+				</div>
+			</div>
+			<label id="name_warn"
+				style="margin-left: 12px; display: none; color: #FF3366">患者姓名不能为空！</label>
+		</div>
+
+		<div class="weui_cells wenben2">
+			<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label class="weui_label">性别</label> 
+			</div>
+				<div class="weui_cell_bd weui_cell_primary">
+				<select
+					onfocus="sexCleanWarn()" th:field="*{sex}" class="weui_select"
+					style="line-height: 300%; height: 300%">
+					<option th:field="*{sex}" th:value="0" th:selected="selected">请选择</option>
+					<option th:field="*{sex}" th:value="1">男</option>
+					<option th:field="*{sex}" th:value="2">女</option>
+				</select>
+				</div>
+			</div>
+			<label id="sex_warn"
+				style="margin-left: 12px; display: none; color: #FF3366">请选择性别！</label>
+
+		</div>
+
+
+		<div class="weui_cells wenben2">
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">联系方式</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary"
+					style="margin-left: 40px">
+					<input class="weui_input" type="number" th:field="*{mobile}"
+						onfocus="contactCleanWarn()" pattern="" placeholder="请输入您的联系方式" />
+
+				</div>
+
+			</div>
+			<label id="contact_warn"
+				style="margin-left: 12px; display: none; color: #FF3366">联系方式不能为空！</label>
+
+			<div class="weui_cell ">
+				<div class="weui_cell_hd">
+					<label class="weui_label">就诊日期</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary"
+					style="margin-left: 40px">
+					<input class="weui_input" type="date" th:field="*{date}"
+						onfocus="dateCleanWarn()" style="width: 100%"
+						value="${#dates.format(date)}" />
+
+				</div>
+
+			</div>
+			<label id="date_warn"
+				style="margin-left: 12px; display: none; color: #FF3366">请选择就诊日期！</label>
+		</div>
+
+
+		<div class="weui_cells wenben2">
+			<div class="weui_cell">
+
+				<div class="weui_cell_hd">
+				 <label class="weui_label">医院</label> 
+				</div>
+								<div class="weui_cell_bd weui_cell_primary">
+				
+				<select
+					onfocus="hidCleanWarn()" th:field="*{hid}" class="weui_select"
+					style="line-height: 300%; height: 300%; width: 100%">
+					<option value="0" th:selected="selected">请选择</option>
+					<option value="1">儿童医院北京西路门诊</option>
+					<option value="2">儿科医院枫林路门诊</option>
+					<option value="3">儿童医学中心</option>
+					<option value="4">新华医院儿科</option>
+					<option value="5">东方医院南院儿科</option>
+				</select>
+</div>
+			</div>
+			<label id="hid_warn"
+				style="margin-left: 12px; display: none; color: #FF3366">请选择医院！</label>
+
+		</div>
+
+		<div class="weui_cells wenben2">
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label">科室</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+
+					<select onfocus="officeCleanWarn()" th:field="*{office}"
+						class="weui_select" style="line-height: 300%; height: 300%">
+
+						<option value="0" th:selected="selected">请选择</option>
+						<option value="1">内科</option>
+						<option value="2">普外科</option>
+						<option value="3">儿童保健科</option>
+					     <option value="4">骨科</option>
+						<option value="5">眼科</option>
+						<option value="6">耳鼻喉科</option>
+						<option value="7">皮肤科</option>
+						<option value="8">中医科</option>
+						<option value="9">口腔科</option>
+						<option value="10">其它</option>
+
+					</select>
+				</div>
+			</div>
+			<label id="office_warn"
+				style="margin-left: 12px; display: none; color: #FF3366">请选择科室！</label>
+		</div>
+
+		<div style="margin-top: 50px; margin-bottom: 30px;">
+			<input id="submit" type="submit" class="weui_btn weui_btn_primary"
+				value="确认"></input>
+		</div>
+	</form>
+
+</body>
+</html>

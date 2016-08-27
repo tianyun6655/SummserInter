@@ -1,0 +1,67 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+
+<title>保管家信息平台</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+		href="../../back-test/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/css/matrix-style2.css}"
+		href="../../back-test/css/matrix-style2.css" />
+    <style type="text/css">
+        .control-group .controls label{
+			display:inline-block;
+		}
+		table{
+			margin-top:-10px;
+		}
+		tr{
+			height:30px;
+			font-size:15px;
+		}
+    </style>
+</head>
+<body>
+<div id="content">
+
+  <div id="content-header">
+      <h1>欢迎来到保管家信息系统</h1>
+  </div>
+  <div class="container-fluid" style="margin-top:30px;">
+    <div class="row-fluid">
+      <div class="span12">
+		<div class="widget-box">
+          <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+            <h5>个人资料</h5>
+          </div>
+          <div class="widget-content nopadding">
+            <!-- <table class="table table-bordered data-table" id="example">
+              <thead>
+                <tr>
+                  <th>账户名称</th>
+                  <th>姓名</th>
+                  <th>角色</th>
+                  <th>权限</th>
+                  <th>权限描述</th>
+                </tr>
+              </thead>
+              <tbody>
+              	<tr>
+              		<td><%=account.getAccountName() %></td>
+              		<td><%=account.getEmployeeName() %></td>
+              		<td><%=role.getRoleName() %></td>
+              		<td><%=role.getModuleId() %></td>
+              		<td><%=role.getRoleDescription() %></td>
+              	</tr>
+              </tbody>
+              
+            </table> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" id="WebViewport"
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+<link rel="stylesheet" th:href="@{/css/weui.css}"
+	href="../../clinic/css/weui.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../clinic/css/weixin.css" />
+<script src="../../clinic/js/js_adaption.js"
+	th:src="@{/js/js_adaption.js}">
+</script>
+<script th:inline="javascript">  
+	WeixinJSBridge.invoke('closeWindow',{},function(res){
+	
+	    //alert(res.err_msg);
+	
+	});
+</script>
+</head>
+<body>
+	<div class="jianju2">
+		<div align="center" style="margin-top: 50px">
+			<img src="../../clinic/image/submit.png" style="width: 100%"></img>
+		</div>
+		<div align="center" style="margin-top: 100px">
+			<p class="biaoqian">感谢您使用保管家儿童速诊通服务！</p>
+			<p class="biaoqian">客服人员会在工作时间2H内（周末、节假日除外）主动与您取得联系，请保持手机畅通。我们将竭诚为您服务，祝您身体健康！</p>
+		</div>
+		<div class="dianhua">
+			<a href="tel:4008679090"><img
+				src="../../clinic/image/bohao.png" /></a>
+		</div>
+		<div class="dianhua2">
+			<div style="align: center; margin-bottom: 50px">
+				<ul style="padding-top: 40px;">
+					<li class="dianhua3">统一服务热线：<a href="tel:4008679090">4008679090</a>
+					</li>
+					<li class="dianhua4">热线服务时间：工作日 8:00-17:00</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

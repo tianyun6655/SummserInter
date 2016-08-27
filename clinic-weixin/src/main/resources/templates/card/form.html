@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" id="WebViewport"
+	content="width=640, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+
+<link rel="stylesheet" th:href="@{/css/weui.min.css}" href="../../css/weui.min.css" />
+<link rel="stylesheet" th:href="@{/css/weixin.css}"
+	href="../../css/weixin.css" />
+<script src="../../js/jquery-1.7.2.js"></script>
+<script src="../../js/js_adaption.js"></script>
+<script>  
+ var status =0;
+function submit() {
+ 	var no = document.getElementById("no").value.trim();
+ 	var pwd = document.getElementById("password").value;
+	if (no == '') {
+		alert('卡号不能为空！');
+		document.getElementById("no_warn").style.display="";
+		return;
+	}
+	if (pwd == '') {
+		alert('密码不能为空！');
+		document.getElementById("pwd_warn").style.display="";
+		return;
+	}
+	document.getElementById("no_warn").style.display="none";
+	document.getElementById("pwd_warn").style.display="none";
+	if(status==1){
+	document.getElementById("form").submit();}
+	else{
+		//alert("未同意条款！");
+		var warn_label = document.getElementById('agree_warn');
+		warn_label.style.display = "";
+	}
+}
+
+$(function (){
+    $('#div1').toggle(
+        function (){
+
+            $(this).css('background-image','url(../../image/0003-2.png)');
+
+            status =1;
+            var warn_label = document.getElementById('agree_warn');
+    		warn_label.style.display = "none";
+        },
+        function (){
+             
+
+            $(this).css('background-image','url(../../image/0003-1.png)')
+
+            status =0;
+            var warn_label = document.getElementById('agree_warn');
+    		warn_label.style.display = "none";
+        }
+    )
+})
+
+function cleanStatus(){
+	var div1 = document.getElementById("div2");
+	div1.style.display = "none";
+	
+}
+
+</script>
+</head>
+<body class="body1">
+	<div class="header1">
+	    <p class="biaoqian">登录卡号</p>
+	</div>	
+		<form id="form" th:action="@{input}" th:object="${card}"
+			action="#" method="post">
+			<input type="hidden" th:field="*{type}" th:value="${type}"/>
+			<div id="div2" th:if="${not #strings.isEmpty(error)}">  
+	           
+	            <p style="font-size:27px; color:#FF3366"  th:text="${error}"></p>  
+	           
+	        </div> 
+	        <label  id="agree_warn"
+					style="margin-left: 12px; display: none; color: #FF3366;font-size:27px">未同意条款！</label>
+					
+			<input type="hidden" th:field="*{uid}" th:value="${uid}" />
+			
+	       <div class="weui_cells wenben" style="line-height:100%">
+			<div class="weui_cell">
+				<div class="weui_cell_hd">
+					<label class="weui_label ">卡号</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input onfocus = "cleanStatus()" class="weui_input" type="text" th:field="*{no}"
+						placeholder="请输入您的卡号" />
+				</div>
+				<div id="no_warn" class="weui_cell_ft" style="display: none">
+					<i class="weui_icon_warn"></i>
+				</div>
+			</div>
+			<div class="weui_cell" style="margin-right: 30px">
+				<div class="weui_cell_hd">
+					<label class="weui_label">密码</label>
+				</div>
+				<div class="weui_cell_bd weui_cell_primary">
+					<input onfocus = "cleanStatus()" class="weui_input" type="password" th:field="*{password}"
+						placeholder="请输入您的密码" />
+				</div>
+				<div id="pwd_warn" class="weui_cell_ft" style="display: none">
+					<i class="weui_icon_warn"></i>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="weui_cell" style="margin-left:20px;margin-top:20px">
+				<div   class="weui_cell_hd"
+
+					style="background-image: url(../../image/0003-1.png); width: 42px; height: 33px"
+
+					id='div1'></div>
+				<p style="color: #949496; font-size: 30px;">我已了解</p>
+				<div th:switch="${card.type}">
+				<a th:case="1" style="color: #6ac9e0; font-size: 30px; margin-left: 6px"
+					href="#" th:href="@{describe(type=${card.type})}">诊无忧服务条款</a>
+				<a th:case="2" style="color: #6ac9e0; font-size: 30px; margin-left: 6px"
+					href="#" th:href="@{describe(type=${card.type})}">速诊通服务条款</a>
+				<a th:case="3" style="color: #6ac9e0; font-size: 30px; margin-left: 6px"
+					href="#" th:href="@{describe(type=${card.type})}">安诊通服务条款</a>
+			  </div>
+			</div>
+		</div>
+		<div class="button_sp_area" >
+			<a href="#" class="weui_btn weui_btn_primary " onclick="submit()"
+				style="margin-top: 20px; margin-left: 30px; margin-right: 30px">确认</a>
+		</div>
+
+	</form>
+
+</body>
+</html>

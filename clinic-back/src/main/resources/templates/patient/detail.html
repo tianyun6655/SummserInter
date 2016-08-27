@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0"/>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../back-test/css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/weui.css}"
+	href="../../back-test/css/weui.css" />
+<link rel="stylesheet" th:href="@{/css/example.css}"
+	href="../../back-test/css/example.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-responsive.min.css}"
+	href="../../back-test/css/bootstrap-responsive.min.css" />
+<link rel="stylesheet" th:href="@{/css/colorpicker.css}"
+	href="../../back-test/css/colorpicker.css" />
+<link rel="stylesheet" th:href="@{/css/datepicker.css}"
+	href="../../back-test/css/datepicker.css" />
+<link rel="stylesheet" th:href="@{/css/uniform.css}"
+	href="../../back-test/css/uniform.css" />
+<link rel="stylesheet" th:href="@{/css/select2.css}"
+	href="../../back-test/css/select2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-style2.css}"
+	href="../../back-test/css/matrix-style2.css" />
+<link rel="stylesheet" th:href="@{/css/matrix-media.css}"
+	href="../../back-test/css/matrix-media.css" />
+<link rel="stylesheet" th:href="@{/css/bootstrap-wysihtml5.css}"
+	href="../../back-test/css/bootstrap-wysihtml5.css" />
+<link rel="stylesheet" th:href="@{/font-awesome/css/font-awesome.css}"
+		href="../../back-test/font-awesome/css/font-awesome.css" />	 
+<script src="../../js/jquery-1.7.2.js"></script>
+<title>病人详情</title>
+<script th:inline="javascript">  
+function submit() {
+ 	var name = document.getElementById("name").value.trim();
+ 	var mobile = document.getElementById("mobile").value.trim();
+ 	var address = document.getElementById("address").value.trim();
+ 	var cards = document.getElementById("cards").value.trim();
+ 	var hid = document.getElementById("hid").value;
+ 	var office = document.getElementById("office").value;
+    var date = document.getElementById("date").value;
+ 	var registerType = document.getElementById("registerType").value;
+ 	var contact = document.getElementById("contact").value.trim();
+ 	var relation = document.getElementById("relation").value;
+ 	var symptom = document.getElementById("symptom").value.trim();
+ 	var backRemark = document.getElementById("backRemark").value.trim();
+ 	var remark = document.getElementById("remark").value.trim();
+ 	var time = document.getElementById("time").value.trim();
+    var status = document.getElementById("isRegister").value;
+    
+
+ 	if (name == '') {
+		alert('患者姓名不能为空！');
+		document.getElementById("name_warn").style.display="";
+		return;
+	}
+ 	if (mobile == '') {
+		alert('手机号不能为空！');
+		document.getElementById("mobile_warn").style.display="";
+		return;
+	}
+	if(!/^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/i.test(mobile)){
+	  	alert('手机号不正确，请重新输入！');
+	  	document.getElementById("mobile_warn").style.display="";
+	  	return;
+	}
+	if(address == '') {
+		if(status=="1"){
+		alert('地址不能为空，请重新输入！');
+ 	  	document.getElementById("address_warn").style.display="";
+		return;}
+	}
+ 	if (!(/(^\d{15}$)|(^\d{17}([0-9]|X)$)/.test(cards)))  
+    {
+ 		if(status=="1"){
+        alert('身份证号码不正确，请重新输入！');
+ 	  	document.getElementById("idcard_warn").style.display="";
+        return;}
+   }
+	if(hid == '0') {
+		alert('请选择就诊医院！');
+		return;
+	}
+	if(office == '0') {
+		alert('请选择科室！');
+		return;
+	}
+    if(date == '') {
+		alert('请选择就诊日期！');
+		return;
+	} 
+	if(registerType == '0') {
+		if(status=="1"){
+		alert('请选择挂号类型！');
+		return;}
+	} 
+
+	 document.getElementById("form").submit();
+}
+//<![CDATA[
+window.onload = function(){
+		var obj_select = document.getElementById("isRegister");
+		var obj_div = document.getElementById("div1");
+		obj_div.style.display = obj_select.value == '1' ? "block" : "none";
+
+		obj_select.onchange = function() {
+			obj_div.style.display = this.value == '1' ? "block" : "none";
+		}		
+}
+//]]> 
+</script>
+
+</head>
+<body style="ontouchstart">
+  <div id="content">
+	<div id="content-header">
+	    <h1>就诊信息</h1>
+	</div>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div class="span12">
+        <div class="widget-box">
+          <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+            <h5>就诊者基本信息</h5>
+           
+            
+            </div>
+	<div class="widget-content nopadding" style="margin:auto">
+		<form id="form" class="form-horizontal"  th:action="@{update}" th:object="${patient}"
+			action="#" method="post" >
+			<input type="hidden" th:field="*{pid}" th:value="${pid}"/>
+			<input type="hidden" th:field="*{status}" th:value="${status}"/>
+			<input type="hidden" th:field="*{createTime}" th:value="${createTime}"/>
+		    <input type="hidden" th:field="*{productType}" th:value="${productType}"/>
+		    <input type="hidden" th:field="*{sex}" th:value="${sex}"/>
+			
+		
+			<div class="control-group">
+	            <label class="control-label">就诊病人姓名</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{name}" placeholder="请输入就诊者姓名"/>
+	            </div>
+	          <!--  <div id="name_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>  -->
+        	</div>
+        	
+        	
+			<div class="control-group">
+	           <label class="control-label">联系方式</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{mobile}" placeholder="请输入您的联系方式"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	<div class="control-group">
+	           <label class="control-label">其它联系方式</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{contact}" placeholder="请输入您的联系方式"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	  <div class="control-group">
+	  	            <label class="control-label">产品类型</label>
+			<div class="controls" th:switch="${patient.productType}">
+				<input class="required"   disabled="true" type="text" th:case="1"  value="诊无忧"/>
+				<input class="required"   disabled="true" type="text" th:case="2" value="速诊通"/>
+				<input class="required"   disabled="true" type="text" th:case="3" value="安诊通"/>
+			</div>
+			
+		</div>
+	      <div class="control-group">
+	            <label class="control-label">就医医院</label>
+	            <div class="controls">
+	                <select th:field="*{hid}" class="required">
+		              <option value="0" th:selected="selected" >请选择</option>
+		              <option value="1" >儿童医院（北京西路门诊部）</option>
+		              <option value="2" >儿科医院（枫林路门诊部）</option>
+		              <option value="3" >儿童医学中心</option>
+		              <option value="4" >新华医院儿科</option>
+		              <option value="5" >东方医院南院儿科</option>
+		              <option value="6">上海交通大学附属第一人民医院（南院）</option>
+					<option value="7">上海交通大学附属第九人民医院（总院）</option>
+					<option value="8">上海交通大学附属仁济医院（南院）</option>
+					<option value="9">上海同济大学附属东方医院（南院）</option>
+					<option value="10">上海同济大学附属同济医院</option>
+					<option value="11">上海同济大学附属第十人民医院</option>
+					<option value="12">上海中医药大学附属曙光医院（东院）</option>
+					<option value="13">上海中医药大学附属龙华医院</option>
+					<option value="14">上海同济大学附属岳阳医院</option>
+					<option value="15">上海复旦大学附属妇产科医院（杨浦分院）</option>
+					<option value="16">上海同济大学附属第一妇婴保健院（东院）</option>
+					<option value="17">上海交通大学附属儿童医院（北京西路）</option>
+					<option value="18">上海复旦大学附属华山医院</option>
+					<option value="19">上海交通大学附属瑞金医院（卢湾分院）</option>
+					<option value="20">上海复旦大学附属中山医院（逸仙医院）</option>
+					<option value="21">上海复旦大学附属儿科医院（枫林院区）</option>
+					<option value="22">上海交通大学附属上海儿童医学中心</option>
+					<option value="23">上海交通大学附属新华医院</option>
+					<option value="24">上海同济大学附属东方医院（北院）</option>
+					<option value="25">上海市第五人民医院</option>
+      				</select>
+	            </div>
+        	</div>
+			 	<div class="control-group">
+        	 <label class="control-label">科室</label>
+        	<div class="controls">
+	        	<select th:field="*{office}" class="required">
+		        	<option value="0" th:selected="selected">请选择</option>
+		        		<option value="1">内科</option>
+						<option value="2">普外科</option>
+					    <option value="3">儿童保健科</option>
+						<option value="4">骨科</option>
+						<option value="5">眼科</option>
+						<option value="6">耳鼻喉科</option>
+						<option value="7">皮肤科</option>
+						<option value="8">中医科</option>
+						<option value="9">口腔科</option>
+						<option value="11">妇科</option>
+					    <option value="12">儿科</option>
+						<option value="10">其它</option>
+	        	</select>
+        	</div>
+        			<div class="control-group">
+	            <label class="control-label">就诊日期</label>
+	            <div class="controls">
+	                <input class="required" type="date" th:field="*{date}" value="${#dates.format(date)}"/>
+	            </div>
+	        </div>
+	        
+	        
+	         <div class="control-group">
+	            <label class="control-label">就诊时间</label>
+	            <div class="controls">
+	                <input class="required" type="text"  th:field="*{time}" value="${time}"/>
+	            </div>
+	        </div>
+	        
+        	</div>
+        		<div class="control-group">
+	             <label class="control-label">与病患关系</label>
+	            <div class="controls">
+  					<select th:field="*{relation}" class="required">
+		              <option value="0" th:selected="selected" >请选择</option>
+		              <option value="1" >父母</option>
+		    		  <option value="2" >其他</option>
+      				</select>
+	            </div>
+	        </div> 
+        	
+        	
+        	
+        
+	        
+            <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+               <h5>就医需求信息</h5>
+            </div>
+            			
+        	<div class ="control-group">
+	             <label class = "control-label">代办挂号</label>
+	              <div class="controls">
+	               <select th:field="*{isRegister}" class ="required" >
+	                 <option  th:value="1">是</option>
+	                 <option   th:value="0">否</option>
+	              </select>
+	             </div>
+	         </div>
+	           
+	         <div id="div1">
+	           <div class="control-group">
+	             <label class="control-label">挂号类型</label>
+	            <div class="controls">
+  					<select th:field="*{registerType}" class="required" th:value = "${patient.registerType}">
+		              <option value="0" th:selected="selected" >请选择</option>
+		              <option value="1" >普通</option>
+		    		  <option value="2" >专家【不保证预约成功】</option>
+      				</select>
+	            </div>
+	        </div>
+           <div class="control-group">
+	            <label class="control-label">联系地址</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{address}" placeholder="请输入就诊者联系地址"/>
+	            </div>
+	            
+	            <div id="address_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	
+         	<div class="control-group">
+	            <label class="control-label">身份证号码</label>
+	            <div class="controls">
+	                <input class="required" type="number" th:field="*{cards}" placeholder="请输入就诊者身份证号"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	</div>
+       
+        	
+	
+	    
+	        
+	        <div class="control-group">
+	           <label class="control-label">症状</label>
+	            <div class="controls">
+	                <input class="required" type="text" th:field="*{symptom}" placeholder="请输入病患症状"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+	        
+	        
+        	  <div class="control-group">
+	           <label class="control-label">备注</label>
+	            <div class="controls">
+	                <textarea class="required" type="text" th:field="*{remark}" placeholder="请输入备注" style="height:111px"/>
+	            </div>
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div>
+        	
+        	   <div > 
+	           <label class="control-label">后台备注</label>
+	          <div class="controls"> 
+	                <textarea class="required" type="text" th:field="*{backRemark}" placeholder="请输入后台备注" style="height:111px"/>
+	             </div> 
+	            <div id="mobile_warn" class="weui_cell_ft" style="display: none">
+                	<i class="weui_icon_warn"></i>
+            	</div>
+        	</div> 
+        	
+        	
+	        
+	        <div class="control-group">   
+			<a href="#" class="btn btn-success" onclick ="submit()" style="width:100px;float:left;margin-left:70px;margin-bottom:5px;" >确认</a>
+			
+			<a href="#" class="btn btn-success" th:href="@{cancelorder(pid=${patient.pid})}" style="width:100px;float:left;margin-left:150px;margin-bottom:5px; background-color:red">取消</a>
+			
+		   </div>
+		   
+		   
+		</form>
+		    </div>
+		  </div>
+        </div>
+      </div>
+
+   </div>
+</div>
+</body>
+</html>

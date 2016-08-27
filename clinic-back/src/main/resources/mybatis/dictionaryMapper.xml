@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.framework.mapper.DictionaryMapper">
+ <select id="list" resultType="com.ijianbao.framework.bean.Dictionary">
+    select id,name,status,created_by as createBy, created_time as createTime, updated_by as updateBy from sys_dictionary
+ </select>
+ 
+ <select id="getDictionaryById" parameterType="int" resultType="com.ijianbao.framework.bean.Dictionary">
+    select id,name,status,created_by as createBy, created_time as createTime, updated_by as updateBy from sys_dictionary where id =#{id} 
+ </select>
+ 
+ <update id="updateStatus" parameterType="com.ijianbao.framework.bean.Dictionary">
+    update sys_dictionary set status =#{status} where id =#{id}
+ </update>
+ 
+ <select id="sublist" parameterType="int"  resultType="com.ijianbao.framework.bean.SubDictionary" >
+    select id, d_id as dId,name,value,status,created_by as createdBy,created_time as createdTime,updated_by as updatedBy, updated_time as updatedTime 
+    from sys_dictionary_data where d_id = #{dId}
+ </select>
+ 
+<insert id="inputSub" parameterType="com.ijianbao.framework.bean.SubDictionary">
+   insert into sys_dictionary_data (d_id,name,value,created_by,created_time,updated_by,updated_time) 
+   values (#{dId},#{name},#{value},#{createdBy},#{createdTime},#{updatedBy},#{updatedTime}
+   )
+</insert>
+ <insert id="input" parameterType="com.ijianbao.framework.bean.Dictionary">
+     insert into sys_dictionary (name,status,created_by,created_time,updated_by,updated_time)
+     values
+     (#{name},#{status},#{createBy},#{createTime},#{updateBy},#{updateTime})
+ </insert>
+</mapper>

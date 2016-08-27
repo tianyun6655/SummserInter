@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.mapper.UserMapper">
+
+	<select id="getUser" parameterType="String" resultType="com.ijianbao.model.User">
+		select uid, mobile, status, time from tb_user where mobile=#{mobile}
+	</select>
+
+	<select id="getUserByOpenId" parameterType="String"
+		resultType="com.ijianbao.model.User">
+		select uid, openid, mobile, status, time from tb_user where openid=#{openid}
+	</select>
+
+	<insert id="saveUser" parameterType="com.ijianbao.model.User">
+		<selectKey keyProperty="uid" resultType="int" order="AFTER">
+			select LAST_INSERT_ID() as uid
+		</selectKey>
+		insert into tb_user(openid, mobile, time) values (#{openid},
+		#{mobile}, #{time})
+	</insert>
+	
+	<update id="updateStatus" parameterType="com.ijianbao.model.User">
+		update tb_user set status=#{status} where uid=#{uid}
+	</update>
+	
+	<update id="updateUser" parameterType="com.ijianbao.model.User">
+		update tb_user set openid=#{openid} where uid=#{uid}
+	</update>
+
+</mapper>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+<title>保管家</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta name="viewport"
+	content="width=device-width,initial-scale=1,user-scalable=0" />
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"
+	href="../../back-test/css/bootstrap.min.css" />
+<link rel="stylesheet" th:href="@{/css/weui.css}"
+	href="../../back-test/css/weui.css" />
+<link rel="stylesheet" th:href="@{/css/example.css}"
+	href="../../back-test/css/example.css" />
+</head>
+<body style="ontouchstart">
+	<div layout:fragment="content" class="weui_cells weui_cells_form">
+	<h1 layout:fragment="header" align="center">提交成功</h1>
+		<form id="codeForm"
+			action="#" method="post">
+	<div class="weui_msg">
+		<div class="weui_icon_area">
+			<i class="weui_icon_success weui_icon_msg"></i>
+		</div>
+		<div class="weui_text_area">
+			<h2 class="weui_msg_title">提交成功</h2>
+		</div>
+		<!-- <div class="weui_text_area">
+			查看 <a href="#">我的订单</a>
+		</div> -->
+	</div>
+	</form>
+	</div>
+</body>
+</html>

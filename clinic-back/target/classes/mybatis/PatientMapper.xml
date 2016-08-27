@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ijianbao.framework.mapper.PatientMapper">
+  
+ <insert id="savePatient" parameterType="com.ijianbao.framework.bean.Patient" >
+ 	<selectKey keyProperty="pid" resultType="int" order="AFTER" >
+    	select LAST_INSERT_ID() as pid
+    </selectKey>
+ 	insert into tb_patient(cid, name, sex, age, mobile, address, cards, relation, contact, hid, office, register_type, symptom, date, time, type, suid, ems, remark,back_remark, status, create_time, update_time, update_id,product_type,is_register) 
+ 		values 
+ 		(#{cid}, #{name}, #{sex}, #{age},#{mobile}, #{address}, #{cards}, #{relation}, #{contact}, #{hid}, #{office}, #{registerType}, #{symptom}, #{date}, #{time}, #{type},  #{suid}, #{ems},#{remark},#{backRemark}, #{status}, #{createTime}, #{updateTime}, #{updateId},#{productType},#{isRegister})
+ </insert>
+ 
+ <select id="list" parameterType="java.util.HashMap" resultType="com.ijianbao.framework.bean.Patient">
+  	select product_type as productType,type, pid, name, date, hid,is_register as isRegister, status,time from tb_patient order by date desc;
+  	<!-- <isParameterPresent>
+	  	<isNotNull property="start">
+	        limit #{start}, #{end}
+	    </isNotNull>
+    </isParameterPresent> -->
+  </select>
+  
+  <select id="getPatientbyservice" parameterType="int" resultType="com.ijianbao.framework.bean.Patient">
+     select symptom,type, status, pid, name, sex, mobile, address, cards, hid, office, date, register_type as registerType,time,remark from tb_patient where suid=#{suid} order by find_in_set(status,'3,6,7,0')
+  </select>
+  <select id="getPatient" parameterType="int" resultType="com.ijianbao.framework.bean.Patient">
+  	select type, pid, cid, name, sex, age, mobile, address, cards, relation, contact, hid, office, register_type as registerType, symptom, date, time, type, suid, ems, remark,back_remark as backRemark, status, create_time as createTime, update_time as updateTime, update_id as updateId, is_register as isRegister,product_type as productType from tb_patient where pid=#{pid}
+  </select>
+  
+   <update id="updatePatient" parameterType="com.ijianbao.framework.bean.Patient">
+  	update tb_patient set status = #{status}, address=#{address}, is_register=#{isRegister}, name = #{name}, mobile = #{mobile}, cards = #{cards}, contact = #{contact}, relation = #{relation}, symptom = #{symptom}, back_remark = #{backRemark}, update_id = #{updateId}, hid=#{hid}, office=#{office}, register_type=#{registerType}, date=#{date}, suid=#{suid}, ems=#{ems}, remark=#{remark}, back_remark=#{backRemark}, status=#{status}, update_id=#{updateId}, update_time=#{updateTime}, time = #{time} where pid=#{pid}
+   </update>
+  
+    <update id="updateService" parameterType="com.ijianbao.framework.bean.Patient">
+  	update tb_patient set  update_id = #{updateId}, back_remark=#{backRemark}, status=#{status}, update_time=#{updateTime}, suid = #{suid} where pid=#{pid}
+   </update>
+   
+   <select id="getPatientByCid" parameterType="int" resultType="com.ijianbao.framework.bean.Patient">
+     	select type, pid, cid, name, sex, age, mobile, address, cards, relation, contact, hid, office, register_type as registerType, symptom, date, time, type, suid, ems, remark,back_remark as backRemark, status, create_time as createTime, update_time as updateTime, update_id as updateId, is_register as isRegister,product_type as productType from tb_patient where cid=#{cid}
+   
+   </select>
+   
+   <select id="checkPatient" parameterType="com.ijianbao.framework.bean.Patient" resultType="int">
+      select count(pid) from tb_patient where mobile=#{mobile} and cid=#{cid} and status!=0
+   </select>
+  <!--  <select id="getServices" parameterType="java.util.HashMap" resultType="com.ijianbao.framework.bean.SysUser">
+       select name,id from sys_user where is_service = 1
+   </select> -->
+   
+    <update id="updateStatus" parameterType="com.ijianbao.framework.bean.Patient">
+  	      update tb_patient set  status = #{status} where pid=#{pid}
+   </update>
+   
+</mapper>
